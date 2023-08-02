@@ -53,7 +53,11 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
+<<<<<<< HEAD
       <h1 class="logo me-auto"><a href="index.php">VaccineNet</a></h1>
+=======
+      <h1 class="logo me-auto"><a href="index.html">Vaccinenet</a></h1>
+>>>>>>> e8c90d5c2383712145e22f7c88dd94369a46c1d3
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.php" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
 
@@ -63,6 +67,7 @@
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#services">Services</a></li>
           <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li>
+
           <li><a class="nav-link scrollto" href="#departments">Branches</a></li>
           <li class="dropdown"><a href="#"><span>Hospitals</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
@@ -86,7 +91,7 @@
       </nav><!-- .navbar -->
 
       <a href="signupp.php" class="appointment-btn scrollto"><span class="d-none d-md-inline">Sign</span> Up</a>
-
+      <a href="signupp.php" class="appointment-btn scrollto"><span class="d-none d-md-inline">Book an</span> Appointment</a>
     </div>
   </header><!-- End Header -->
 

@@ -1017,6 +1017,7 @@ section {
 --------------------------------------------------------------*/
 .appointment .php-email-form {
   width: 100%;
+  background-color: #18d26e;
 }
 
 .appointment .php-email-form .form-group {
