@@ -53,9 +53,9 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html">VaccineNet by miyya</a></h1>
+      <h1 class="logo me-auto"><a href="index.php">VaccineNet</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
+      <!-- <a href="index.php" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
@@ -148,6 +148,11 @@
     <div class="button-wrapper">
       <a href="patient.php" class="btn-patient">Patient</a>
       <p>Click here for Patient</p>
+    </div>
+    <!-- <div class="button-container"> -->
+    <div class="button-wrapper">
+      <a href="" class="btn-admin">Hospital</a>
+      <p>Click here for hospital</p>
     </div>
   </div>
 </div>

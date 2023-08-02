@@ -1,53 +1,72 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+// This script will handle login
+session_start();
 
-    // not to have duplicate data
-    if (empty($email) || empty($password)) {
-        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Error!</strong> Please fill in all fields.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                </button>
-            </div>';
+// Check if the user is already logged in
+if (isset($_SESSION['name'])) {
+    header("location: admin/index.php");
+    exit;
+}
+
+require_once "attach.php";
+
+$username = $password = "";
+$err = "";
+
+// If request method is post
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    if (empty(trim($_POST['name'])) || empty(trim($_POST['password']))) {
+        $err = "Please enter name and password";
     } else {
-        // Connecting to the Database
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $database = " signup";
+        $username = trim($_POST['name']);
+        $password = trim($_POST['password']);
+    }
 
-        // Create a connection
-        $conn = mysqli_connect($servername, $username, $password, $database);
-        // Die if connection was not successful
-        if (!$conn) {
-            die("Sorry we failed to connect: " . mysqli_connect_error());
-        } else {
-            // table
-            $sql = "INSERT INTO `logged` ( `email`, `password`) VALUES ( '$email', '$password')";
-            $result = mysqli_query($conn, $sql);
-
-            if (mysqli_num_rows($result) == 1) {
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Success!</strong> Logged in successfully!
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                    </button>
-                </div>';
-            } else {
-                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Error!</strong> Invalid email or password.
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                    </button>
-                </div>';
-            }
+    if (empty($err)) {
+        $sql = "SELECT `s.no`, name, password FROM register WHERE name = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        if (!$stmt) {
+            die("Error: Unable to prepare the statement. " . mysqli_error($conn));
         }
+
+        $param_name = $username;
+        mysqli_stmt_bind_param($stmt, "s", $param_name);
+
+        // Try to execute this statement
+        if (mysqli_stmt_execute($stmt)) {
+            mysqli_stmt_store_result($stmt);
+            if (mysqli_stmt_num_rows($stmt) == 1) {
+                mysqli_stmt_bind_result($stmt, $serial_no, $name, $hashed_password);
+                if (mysqli_stmt_fetch($stmt)) {
+                    if (password_verify($password, $hashed_password)) {
+                        // This means the password is correct. Allow the user to log in.
+                        $_SESSION["name"] = $name;
+                        $_SESSION["s.no"] = $serial_no;
+                        $_SESSION["loggedin"] = true;
+
+                        // Redirect the user to the welcome page
+                        header("location: admin/index.php");
+                        exit; // Important to exit to prevent further execution of the code
+                    } else {
+                        // Invalid password, show error message
+                        $err = "Invalid password";
+                    }
+                }
+            } else {
+                // User not found, show error message
+                $err = "User not found";
+            }
+        } else {
+            // Database query error, show error message
+            $err = "Database query error";
+            // You can display the detailed error message from the database using the following line:
+            // echo mysqli_error($conn);
+        }
+
+        mysqli_stmt_close($stmt); // Close the statement when you are done with it
     }
 }
 ?>
-
 
 
 <!DOCTYPE html>
@@ -86,8 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .wrapper {
-            width: 400px;
-            height: 400px;
+            width: 450px;
+            height: 425px;
             background: #fff;
             border-radius: 5px;
             box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.1);
@@ -106,12 +125,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         .wrapper form {
-            padding: 30px 25px 25px 25px;
+            padding: 35px 30px 29px 29px;
         }
 
         .wrapper form .row {
-            height: 45px;
-            margin-bottom: 15px;
+            height: 55px;
+            margin-bottom: 45px;
             position: relative;
         }
 
@@ -120,9 +139,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             width: 100%;
             outline: none;
             padding-left: 60px;
-            border-radius: 5px;
+            border-radius: 10px;
             border: 1px solid lightgrey;
-            font-size: 16px;
+            font-size: 20px;
             transition: all 0.3s ease;
         }
 
@@ -165,12 +184,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         .wrapper form .button input {
             color: #fff;
-            font-size: 20px;
-            font-weight: 500;
-            padding-left: 0px;
-            background: #3498db;
-            border: 1px solid #16a085;
-            cursor: pointer;
+        font-size: 20px;
+        font-weight: 500;
+        padding: 0 20px;
+        height: 55px;
+        width: 100%; /* Set the width to 100% */
+        background: #3498db;
+        border: 1px solid #16a085;
+        cursor: pointer;
+        border-radius: 10px;
+
         }
 
         form .button input:hover {
@@ -198,22 +221,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <div class="wrapper">
         <div class="title"><span>Login Form</span></div>
         <form action="index.php" method="post" role="form" class="php-login-form">
-          <div class="row">
-            <i class="fas fa-user"></i>
-            <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Enter your email" required>
-          </div>
+        <div class="row">
+                    <!-- Icon for name input -->
+                    <i class="fas fa-user"></i>
+                    
+                    <input type="text" id="name" name="name" placeholder="Enter name" required>
+                </div>
           <div class="row">
             <i class="fas fa-lock"></i>
             <input type="password" name="password" id="password" class="form-control" placeholder="Enter password" required>
           </div>
           <div class="pass"><a href="#">Forgot password?</a></div>
           <div class="row button">
-            <input type="submit" value="Login" href="index.php">
+            <input type="submit" value="Login" href="admin/index.php">
           </div>
-          <div class="signup-link">Not a member? <a href="signupp.php">Register now</a></div>
+         
         </form>
       </div>
     </div>
 
   </body>
 </html>
+
+
+
+
+ 
