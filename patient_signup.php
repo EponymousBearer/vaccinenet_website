@@ -32,32 +32,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Connecting to the Database
         $servername = "localhost";
         $username = "root";
-        $password = "";
-        $database = "hospital";
+        $db_password = "";
+        $database = "patient";
 
         // Create a connection
-        $conn = mysqli_connect($servername, $username, $password, $database);
+        $conn = mysqli_connect($servername, $username, $db_password, $database);
         // Die if connection was not successful
         if (!$conn) {
             die("Sorry we failed to connect: " . mysqli_connect_error());
         } else {
             // Sql query to be executed
-            $sql = "INSERT INTO `register` ( `name`, `father_name` , `father_cnic` , `gender` , `email`, `password`, `confirmpassword`) VALUES ('$name' , '$father_name' , '$father_cnic' , '$email', '$gender' ,'$password', '$confirmpassword')";
+            $sql = "INSERT INTO `register` ( `name`, `father_name` , `father_cnic` , `gender` , `email`, `password`, `confirmpassword`) VALUES ('$name' , '$father_name' , '$father_cnic' , '$gender', '$email' ,'$password', '$confirmpassword')";
             $result = mysqli_query($conn, $sql);
 
             if ($result) {
                 $showForm = false;
-                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Success!</strong> You are registered successfully!
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                    </button>
-                </div>';
+                header("Location: patient_login.php");
+                exit;
             } else {
                 echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>Error!</strong> Unable to register, Please check your input.
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>';
             }
@@ -77,6 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title> Sign Up form </title>
     <link rel="stylesheet" href="style.css">
 </head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
     @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
@@ -200,6 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     .input-box .gender-container label {
         margin-left: 8px;
+        margin-top: 8px;
         font-size: 16px;
         color: #333;
     }
@@ -211,70 +212,79 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     .options {
         display: flex;
         align-items: center;
+
     }
-    .policy input[type="checkbox"]:required:invalid + h3::after {
-    content: "Please accept the terms & conditions";
-    color: red;
-    display: block;
-}
+
+    .policy input[type="checkbox"]:required:invalid+h3::after {
+        content: "Please accept the terms & conditions";
+        color: red;
+        display: block;
+    }
 </style>
+
 <?php
 if ($showForm) {
     ?>
-    <div class="wrapper">
-        <h2>Registration</h2>
-        <form action="signupp.php" method="post" role="form" class="php-signup-form">
-            <div class="input-box">
-                <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name" required>
-            </div>
-            <div class="input-box">
-                <input type="text" name="father_name" id="father_name" class="form-control"
-                    placeholder="Enter your father name" required>
-            </div>
-            <div class="input-box">
-                <input type="number" name="father_cnic" id="father_cnic" pattern="[0-9]{5}-[0-9]{7}-[0-9]{1}"
-                    class="form-control" placeholder="Enter your father cnic" required>
-            </div>
-            <div class="input-box" style="height: 100%;">
-                <div class="gender-container">
-                    <div class="options">
-                        <input type="radio" name="gender" id="male_gender" value="male" required>
-                        <label for="male_gender">Male</label>
-                    </div>
-                    <div class="options">
-                        <input type="radio" name="gender" id="female_gender" value="female" required>
-                        <label for="female_gender">Female</label>
-                    </div>
-                    <div class="options">
-                        <input type="radio" name="gender" id="other_gender" value="other" required>
-                        <label for="other_gender">Other</label>
+
+    <body>
+        <div class="wrapper">
+            <h2>Registration</h2>
+            <form action="patient_signup.php" method="post" role="form" class="php-signup-form">
+                <div class="input-box">
+                    <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" name="father_name" id="father_name" class="form-control"
+                        placeholder="Enter your father name" required>
+                </div>
+                <div class="input-box">
+                    <input type="number" name="father_cnic" id="father_cnic" class="form-control"
+                        placeholder="Enter your father cnic" required>
+                </div>
+                <div class="input-box" style="height: 100%;">
+                    <div class="gender-container">
+                        <div class="options">
+                            <input type="radio" name="gender" id="male_gender" value="male" required>
+                            <label for="male_gender">Male</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="gender" id="female_gender" value="female" required>
+                            <label for="female_gender">Female</label>
+                        </div>
+                        <div class="options">
+                            <input type="radio" name="gender" id="other_gender" value="other" required>
+                            <label for="other_gender">Other</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="input-box">
-                <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control"
-                    placeholder="Enter your email" required>
-            </div>
-            <div class="input-box">
-                <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password"
-                    required>
-            </div>
-            <div class="input-box">
-                <input type="password" name="confirmpassword" id="confirmpassword" class="form-control"
-                    placeholder="Confirm your password" required>
-            </div>
-            <div class="policy">
-                <input type="checkbox" required>
-                <h3>I accept all terms & condition</h3>
-            </div>
-            <div class="input-box button">
-                <input type="Submit" href="index.php" value="Register Now">
-            </div>
-            <div class="text">
-                <h3>Already have an account? <a href="login.php">Login now</a></h3>
-            </div>
-        </form>
-    </div>
+                <div class="input-box">
+                    <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control"
+                        placeholder="Enter your email" required>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="password" id="password" class="form-control"
+                        placeholder="Enter your password" required>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="confirmpassword" id="confirmpassword" class="form-control"
+                        placeholder="Confirm your password" required>
+                </div>
+                <div class="policy">
+                    <input type="checkbox" required>
+                    <h3 style="margin-top: 8px;">I accept all terms & condition</h3>
+                </div>
+                <div class="input-box button">
+                    <input type="Submit" href="index.php" value="Register Now">
+                </div>
+                <div class="text">
+                    <h3>Already have an account? <a href="patient_login.php">Login now</a></h3>
+                </div>
+            </form>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     </body>
     <?php

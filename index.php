@@ -86,7 +86,7 @@
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
-      <a href="signupp.php" class="appointment-btn scrollto"><span class="d-none d-md-inline">Sign</span> Up</a>
+      <a href="patient_signup.php" class="appointment-btn scrollto"><span class="d-none d-md-inline">Sign</span> Up</a>
       <a href="signupp.php" class="appointment-btn scrollto"><span class="d-none d-md-inline">Book an</span> Appointment</a>
     </div>
   </header><!-- End Header -->
