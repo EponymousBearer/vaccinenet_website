@@ -41,11 +41,13 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 14px;
+     align-items: center;
     }
 
     .btn-admin,
     .btn-patient,
     .btn-hospital {
+        margin: 0px;
         padding: 10px 20px;
         font-size: 16px;
         font-weight: bold;
@@ -67,6 +69,7 @@
 
     .login-form {
         display: none;
+        
     }
 
     .login-form.active {
@@ -94,7 +97,7 @@
 
             <!-- Hospital Login Form -->
             <form id="hospital_login_form" class="login-form">
-                <?php /* Placeholder for hospital login form */?>
+                <?php include 'hospital_login.php' ?>
             </form>
         </div>
 

@@ -151,16 +151,9 @@
       <a href="patient/patient_signup.php" class="btn-patient">Patient</a>
       <p>Click here for Patient</p>
     </div>
-<<<<<<< HEAD
     <div class="button-wrapper">
-      <a href="Hospital.php" class="btn-patient">Hospital</a>
+      <a href="hospital_signup.php" class="btn-patient">Hospital</a>
       <p>Click here for Hospital</p>
-=======
-    <!-- <div class="button-container"> -->
-    <div class="button-wrapper">
-      <a href="" class="btn-admin">Hospital</a>
-      <p>Click here for hospital</p>
->>>>>>> 36131b9bb373ded8b143d2fd244702a7b827c3e6
     </div>
   </div>
 </div>

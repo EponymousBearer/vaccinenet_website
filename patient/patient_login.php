@@ -103,6 +103,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         border-radius: 5px;
         box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.1);
         padding: 30px;
+        max-width: 400px;
+       margin: 170px auto;
     }
 
     .wrapper2 .title {
@@ -111,6 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         font-size: 30px;
         font-weight: 600;
         text-align: center;
+
     }
 
     .wrapper2 form {
