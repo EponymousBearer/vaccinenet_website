@@ -150,6 +150,10 @@
       <a href="patient.php" class="btn-patient">Patient</a>
       <p>Click here for Patient</p>
     </div>
+    <div class="button-wrapper">
+      <a href="Hospital.php" class="btn-patient">Hospital</a>
+      <p>Click here for Hospital</p>
+    </div>
   </div>
 </div>
   </section><!-- End Hero -->
