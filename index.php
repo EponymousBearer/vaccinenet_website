@@ -53,11 +53,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-<<<<<<< HEAD
       <h1 class="logo me-auto"><a href="index.php">VaccineNet</a></h1>
-=======
-      <h1 class="logo me-auto"><a href="index.html">Vaccinenet</a></h1>
->>>>>>> e8c90d5c2383712145e22f7c88dd94369a46c1d3
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.php" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a> -->
 
@@ -90,8 +86,9 @@
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
-      <a href="patient_signup.php" class="appointment-btn scrollto"><span class="d-none d-md-inline">Sign</span> Up</a>
-      <a href="signupp.php" class="appointment-btn scrollto"><span class="d-none d-md-inline">Book an</span> Appointment</a>
+      <a href="signup_interface.php" class="appointment-btn scrollto"><span class="d-none d-md-inline">Sign</span> Up</a>
+      <a href="login_interface.php" class="appointment-btn scrollto"><span class="d-none d-md-inline">Log</span> In</a>
+    
     </div>
   </header><!-- End Header -->
 
@@ -147,11 +144,11 @@
   </div>
   <div class="button-container">
     <div class="button-wrapper">
-      <a href="index-2.php" class="btn-admin">Admin</a>
+      <a href="admin_login.php" class="btn-admin">Admin</a>
       <p>Click here for Admin</p>
     </div>
     <div class="button-wrapper">
-      <a href="patient.php" class="btn-patient">Patient</a>
+      <a href="patient/patient_signup.php" class="btn-patient">Patient</a>
       <p>Click here for Patient</p>
     </div>
     <!-- <div class="button-container"> -->
